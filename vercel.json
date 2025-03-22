@@ -1,8 +1,14 @@
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+    { "source": "/nominate/:path*", "destination": "/index.html" },
+    { "source": "/results/:path*", "destination": "/index.html" },
+    { "source": "/host/:path*", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "routes": [
+    { "src": "/[^.]+", "dest": "/", "status": 200 }
+  ],
+  "github": {
+    "silent": true
+  }
 } 
