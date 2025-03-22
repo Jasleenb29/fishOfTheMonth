@@ -8,8 +8,8 @@ const port = process.env.PORT || 3001;
 // CORS configuration
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production'
-    ? ['https://fish-fame.vercel.app', /\.vercel\.app$/]  // Update this with your actual frontend domain
-    : 'http://localhost:8080',
+    ? ['https://fish-fame.vercel.app', /\.vercel\.app$/]  // Update this with your frontend domain
+    : ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082', 'http://localhost:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
@@ -40,6 +40,11 @@ async function readDB() {
 async function writeDB(data) {
     await fs.writeFile(DB_FILE, JSON.stringify(data, null, 2));
 }
+
+// Health check endpoint for Render
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
 
 // Create a new session
 app.post('/api/sessions', async (req, res) => {
@@ -140,7 +145,7 @@ app.post('/api/sessions/:sessionId/close', async (req, res) => {
 });
 
 initDB().then(() => {
-    app.listen(port, () => {
+    app.listen(port, '0.0.0.0', () => {
         console.log(`Server running at http://localhost:${port}`);
     });
 }); 
