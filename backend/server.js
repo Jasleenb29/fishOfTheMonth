@@ -8,7 +8,7 @@ const port = process.env.PORT || 3001;
 // CORS configuration
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production'
-    ? ['https://fish-fame.vercel.app', /\.vercel\.app$/]  // Update this with your frontend domain
+    ? ['https://fish-fame-c12ytl8fr-jasleens-projects-9f78d231.vercel.app', /\.vercel\.app$/]
     : ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082', 'http://localhost:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
