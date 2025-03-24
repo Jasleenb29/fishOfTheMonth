@@ -3,10 +3,24 @@
     { "source": "/nominate/:path*", "destination": "/index.html" },
     { "source": "/results/:path*", "destination": "/index.html" },
     { "source": "/host/:path*", "destination": "/index.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/:path*", "destination": "/index.html" }
   ],
   "routes": [
-    { "src": "/[^.]+", "dest": "/", "status": 200 }
+    { "src": "/[^.]+", "dest": "/", "status": 200 },
+    { "src": "/nominate/(.*)", "dest": "/", "status": 200 },
+    { "src": "/results/(.*)", "dest": "/", "status": 200 },
+    { "src": "/host/(.*)", "dest": "/", "status": 200 }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
   ],
   "github": {
     "silent": true
