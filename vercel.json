@@ -1,12 +1,15 @@
 {
   "rewrites": [
+    { "source": "/nominate/:sessionId", "destination": "/index.html" },
+    { "source": "/results/:sessionId", "destination": "/index.html" },
+    { "source": "/host", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "routes": [
-    { "src": "/[^.]+", "dest": "/index.html", "status": 200 },
     { "src": "/nominate/(.*)", "dest": "/index.html", "status": 200 },
     { "src": "/results/(.*)", "dest": "/index.html", "status": 200 },
-    { "src": "/host/(.*)", "dest": "/index.html", "status": 200 }
+    { "src": "/host/(.*)", "dest": "/index.html", "status": 200 },
+    { "src": "/[^.]+", "dest": "/index.html", "status": 200 }
   ],
   "headers": [
     {
