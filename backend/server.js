@@ -41,9 +41,26 @@ async function writeDB(data) {
     await fs.writeFile(DB_FILE, JSON.stringify(data, null, 2));
 }
 
-// Health check endpoint
+// Health check endpoint with detailed status
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+  const healthcheck = {
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || 'development',
+    memory: process.memoryUsage(),
+    version: process.env.npm_package_version || '1.0.0'
+  };
+  
+  try {
+    res.status(200).json(healthcheck);
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 // Create a new session

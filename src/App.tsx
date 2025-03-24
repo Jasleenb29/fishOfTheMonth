@@ -1,33 +1,42 @@
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from '@/pages/Home';
+import Host from '@/pages/Host';
+import Nominate from '@/pages/Nominate';
+import Results from '@/pages/Results';
+import { Toaster } from '@/components/ui/toaster';
+import { config } from '@/config';
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import Host from "./pages/Host";
-import Nominate from "./pages/Nominate";
-import Results from "./pages/Results";
-import NotFound from "./pages/NotFound";
+function App() {
+  useEffect(() => {
+    // Health check for frontend
+    const checkHealth = async () => {
+      try {
+        const response = await fetch(`${config.apiUrl}/health`);
+        const data = await response.json();
+        console.log('Backend health check:', data);
+      } catch (error) {
+        console.error('Health check failed:', error);
+      }
+    };
 
-const queryClient = new QueryClient();
+    // Check health every 5 minutes
+    checkHealth();
+    const interval = setInterval(checkHealth, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/host" element={<Host />} />
+        <Route path="/nominate/:sessionId" element={<Nominate />} />
+        <Route path="/results/:sessionId" element={<Results />} />
+      </Routes>
       <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/host" element={<Host />} />
-          <Route path="/nominate/:sessionId" element={<Nominate />} />
-          <Route path="/results/:sessionId" element={<Results />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+    </Router>
+  );
+}
 
 export default App;
