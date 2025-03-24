@@ -7,6 +7,7 @@ import Card from '@/components/Card';
 import { api } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import { nanoid } from 'nanoid';
+import { config } from '@/config';
 
 const Host = () => {
   const [hostName, setHostName] = useState('');
@@ -52,7 +53,7 @@ const Host = () => {
   const handleCopyLink = async () => {
     if (!sessionId) return;
     
-    const link = `${window.location.origin}/nominate/${sessionId}`;
+    const link = `${config.baseUrl}/nominate/${sessionId}`;
     
     try {
       await navigator.clipboard.writeText(link);
@@ -159,7 +160,7 @@ const Host = () => {
                   <input
                     type="text"
                     readOnly
-                    value={`${window.location.origin}/nominate/${sessionId}`}
+                    value={`${config.baseUrl}/nominate/${sessionId}`}
                     className="bg-transparent flex-grow focus:outline-none text-sm truncate"
                   />
                   <Button

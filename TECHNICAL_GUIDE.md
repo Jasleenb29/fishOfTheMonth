@@ -301,10 +301,12 @@ async function writeDB(data) {
 // CORS Setup (server.js)
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production'
-    ? ['https://fish-fame-c12ytl8fr-jasleens-projects-9f78d231.vercel.app']
-    : ['http://localhost:5173'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+    ? ['https://fish-fame-c12ytl8fr-jasleens-projects-9f78d231.vercel.app', /\.vercel\.app$/]
+    : ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));

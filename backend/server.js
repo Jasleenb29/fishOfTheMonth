@@ -41,9 +41,9 @@ async function writeDB(data) {
     await fs.writeFile(DB_FILE, JSON.stringify(data, null, 2));
 }
 
-// Health check endpoint for Render
+// Health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // Create a new session
